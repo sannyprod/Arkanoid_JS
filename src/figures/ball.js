@@ -99,17 +99,6 @@ export class Ball extends Figure {
 
   //Проверка столкновение с платформой
   _checkPaddleCollisions(paddle) {
-
-    // let point1 = new Point(this.x, this.y);
-    // let point2 = new Point(this.x + this.radius, this.y + this.radius + this.dy);
-
-    // let point3 = new Point(paddle.x, paddle.y);
-    // let point4 = new Point(paddle.x + paddle.width, paddle.y);
-
-    // console.log(intersection(point1, point2, point3, point4));
-
-  
-    //top edge
     if (this.y + this.radius + this.dy > paddle.y && this.x + this.radius > paddle.x && this.x - this.radius < paddle.x + paddle.width) {
       this.y = paddle.y - this.dy;
 
@@ -127,12 +116,11 @@ export class Ball extends Figure {
 
   //Проверка столкновение с блоками
   _checkBricksCollisions(bricks) {
-
     let pointCenter = new Point(this.x, this.y);
-    let pointMoveLeftBottom = new Point(this.x + this.radius + this.dx, this.y + this.radius + this.dy);
-    let pointMoveRightBottom = new Point(this.x - this.radius + this.dx, this.y + this.radius + this.dy);
-    let pointMoveLeftTop = new Point(this.x + this.radius + this.dx, this.y - this.radius + this.dy);
-    let pointMoveRightTop = new Point(this.x - this.radius + this.dx, this.y - this.radius + this.dy);
+    let pointMoveToRightBottom = new Point(this.x + this.radius + this.dx, this.y + this.radius + this.dy);
+    let pointMoveToLeftBottom = new Point(this.x - this.radius + this.dx, this.y + this.radius + this.dy);
+    let pointMoveToRightTop = new Point(this.x + this.radius + this.dx, this.y - this.radius + this.dy);
+    let pointMoveToLeftTop = new Point(this.x - this.radius + this.dx, this.y - this.radius + this.dy);
 
     for (let c = 0; c < bricks.columnCount; c++) {
       for (let r = 0; r < bricks.rowCount; r++) {
@@ -144,30 +132,13 @@ export class Ball extends Figure {
             let pointLeftBottom = new Point(brick.x, brick.y + brick.height);
             let pointTopLeft = new Point(brick.x, brick.y);
             let pointTopRight = new Point(brick.x + brick.width, brick.y);
-            if (intersection(pointCenter, pointMoveRightBottom, pointLeftTop, pointLeftBottom)) {
+            if (intersection(pointCenter, pointMoveToRightBottom, pointLeftTop, pointLeftBottom)) {
               this.dx = -this.dx;
-
-              brick.checkDestroy();
-              // if (brick.hardness == 0) {
-              //   brick.status = 0;
-              // }
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveLeftTop, pointLeftTop, pointLeftBottom)) {
-              this.dx = -this.dx;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
-            if (intersection(pointCenter, pointMoveRightBottom, pointTopLeft, pointTopRight)) {
+            if (intersection(pointCenter, pointMoveToRightBottom, pointTopLeft, pointTopRight)) {
               this.dy = -this.dy;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveLeftBottom, pointTopLeft, pointTopRight)) {
-              this.dy = -this.dy;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
@@ -177,27 +148,13 @@ export class Ball extends Figure {
             let pointBottomRight = new Point(brick.x + brick.width + 1, brick.y + brick.height);
             let pointRightTop = new Point(brick.x + brick.width, brick.y);
             let pointRightBottom = new Point(brick.x + brick.width, brick.y + brick.height);
-            if (intersection(pointCenter, pointMoveRightTop, pointBottomLeft, pointBottomRight)) {
+            if (intersection(pointCenter, pointMoveToLeftTop, pointBottomLeft, pointBottomRight)) {
               this.dy = -this.dy;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
-            if (intersection(pointCenter, pointMoveLeftTop, pointBottomLeft, pointBottomRight)) {
-              this.dy = -this.dy;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveRightBottom, pointRightBottom, pointRightTop)) {
+            if (intersection(pointCenter, pointMoveToLeftTop, pointRightBottom, pointRightTop)) {
               this.dx = -this.dx;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveRightTop, pointRightBottom, pointRightTop)) {
-              this.dx = -this.dx;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
@@ -207,27 +164,13 @@ export class Ball extends Figure {
             let pointBottomRight = new Point(brick.x + brick.width, brick.y + brick.height);
             let pointLeftTop = new Point(brick.x, brick.y);
             let pointLeftBottom = new Point(brick.x, brick.y + brick.height);
-            if (intersection(pointCenter, pointMoveLeftTop, pointLeftTop, pointLeftBottom)) {
+            if (intersection(pointCenter, pointMoveToRightTop, pointLeftBottom, pointLeftTop)) {
               this.dx = -this.dx;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
-            if (intersection(pointCenter, pointMoveLeftBottom, pointLeftTop, pointLeftBottom)) {
-              this.dx = -this.dx;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveLeftTop, pointBottomLeft, pointBottomRight)) {
+            if (intersection(pointCenter, pointMoveToRightTop, pointBottomLeft, pointBottomRight)) {
               this.dy = -this.dy;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveRightTop, pointBottomLeft, pointBottomRight)) {
-              this.dy = -this.dy;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
@@ -237,27 +180,13 @@ export class Ball extends Figure {
             let pointTopRight = new Point(brick.x + brick.width, brick.y);
             let pointRightTop = new Point(brick.x + brick.width, brick.y);
             let pointRightBottom = new Point(brick.x + brick.width, brick.y + brick.height);
-            if (intersection(pointCenter, pointMoveRightBottom, pointRightTop, pointRightBottom)) {
+            if (intersection(pointCenter, pointMoveToLeftBottom, pointRightTop, pointRightBottom)) {
               this.dx = -this.dx;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }
-            if (intersection(pointCenter, pointMoveLeftTop, pointRightTop, pointRightBottom)) {
-              this.dx = -this.dx;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveRightBottom, pointTopLeft, pointTopRight)) {
+            if (intersection(pointCenter, pointMoveToLeftBottom, pointTopRight, pointTopLeft)) {
               this.dy = -this.dy;
-              // brick.status = 0;
-              brick.checkDestroy();
-              return "brick";
-            }
-            if (intersection(pointCenter, pointMoveLeftBottom, pointTopLeft, pointTopRight)) {
-              this.dy = -this.dy;
-              // brick.status = 0;
               brick.checkDestroy();
               return "brick";
             }

@@ -88,7 +88,6 @@ export class Engine {
     this[method](event);
   }
 
-  //on Start button click - start Game
   _start(event) {
     this.game.start();
     this.menu.changeStartStop(this.game.started);

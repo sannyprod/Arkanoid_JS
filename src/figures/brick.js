@@ -6,30 +6,34 @@ export class Brick extends Figure {
               y,
               width,
               height,
+              bumpsToDestroy = 1,
+              status = 1,
               color = null) {
     super(x, y, color);
     this.width = width;
     this.height = height;
-    this.status = 1; //Для проверки столкновений и отрисовки блоков
-    this.bumpToDestroy = 1;
+    this.status = status; //Для проверки столкновений и отрисовки блоков
+    this.bumpsToDestroy = bumpsToDestroy;
   }
 
-  set hardness(value) {
-    this.bumpToDestroy = value;
-    if (value == 1) {
+  _setColor() {
+    if (this.bumpsToDestroy == 1) {
       this.color = "#666";
     }
-    else if (value == 2) {
+    else if (this.bumpsToDestroy == 2) {
       this.color = "rgba(200, 150, 0, 1)";
     }
     else {
       this.color = "rgba(200, 50, 0, 1)";
     }
-    // this.color = "rgba(200, 150, 0, 1)";
+  }
+
+  set hardness(value) {
+    this.bumpsToDestroy = value;
   }
 
   get hardness() {
-    return this.bumpToDestroy;
+    return this.bumpsToDestroy;
   }
 
   checkDestroy() {
@@ -41,6 +45,11 @@ export class Brick extends Figure {
 
   //Вывод блока на игровую область
   draw(ctx) {
+    if (!this.status) {
+      return;
+    }
+    this._setColor();
+    
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.width, this.height);
     ctx.fillStyle = this.color;
