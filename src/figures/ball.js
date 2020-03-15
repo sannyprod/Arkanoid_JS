@@ -135,6 +135,83 @@ export class Ball extends Figure {
 
   //Проверка столкновение с блоками
   _checkBricksCollisions(bricks) {
+    // let pointCenter = new Point(this.x, this.y);
+    // let pointMoveToRightBottom = new Point(this.x + this.radius + this.dx, this.y + this.radius + this.dy);
+    // let pointMoveToLeftBottom = new Point(this.x - this.radius + this.dx, this.y + this.radius + this.dy);
+    // let pointMoveToRightTop = new Point(this.x + this.radius + this.dx, this.y - this.radius + this.dy);
+    // let pointMoveToLeftTop = new Point(this.x - this.radius + this.dx, this.y - this.radius + this.dy);
+    // for (let c = 0; c < bricks.columnCount; c++) {
+    //   for (let r = 0; r < bricks.rowCount; r++) {
+        
+    //     let brick = bricks.bricks[c][r];
+    //     if (brick.status == 1) {
+    //       if (this.dx > 0 && this.dy > 0) { //Проверка верхней и левой граней
+    //         let pointLeftTop = new Point(brick.x, brick.y);
+    //         let pointLeftBottom = new Point(brick.x, brick.y + brick.height);
+    //         let pointTopLeft = new Point(brick.x, brick.y);
+    //         let pointTopRight = new Point(brick.x + brick.width, brick.y);
+    //         if (intersection(pointCenter, pointMoveToRightBottom, pointLeftTop, pointLeftBottom)) {
+    //           this.dx = -this.dx;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //         if (intersection(pointCenter, pointMoveToRightBottom, pointTopLeft, pointTopRight)) {
+    //           this.dy = -this.dy;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //       }
+    //       else if (this.dx < 0 && this.dy < 0) { //Проверка нижней и правой граней
+    //         let pointBottomLeft = new Point(brick.x - 1, brick.y + brick.height);
+    //         let pointBottomRight = new Point(brick.x + brick.width + 1, brick.y + brick.height);
+    //         let pointRightTop = new Point(brick.x + brick.width, brick.y);
+    //         let pointRightBottom = new Point(brick.x + brick.width, brick.y + brick.height);
+    //         if (intersection(pointCenter, pointMoveToLeftTop, pointBottomLeft, pointBottomRight)) {
+    //           this.dy = -this.dy;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //         if (intersection(pointCenter, pointMoveToLeftTop, pointRightBottom, pointRightTop)) {
+    //           this.dx = -this.dx;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //       }
+    //       else if (this.dx > 0 && this.dy < 0) { //Проверка нижней и левой граней
+    //         let pointBottomLeft = new Point(brick.x, brick.y + brick.height);
+    //         let pointBottomRight = new Point(brick.x + brick.width, brick.y + brick.height);
+    //         let pointLeftTop = new Point(brick.x, brick.y);
+    //         let pointLeftBottom = new Point(brick.x, brick.y + brick.height);
+    //         if (intersection(pointCenter, pointMoveToRightTop, pointLeftBottom, pointLeftTop)) {
+    //           this.dx = -this.dx;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //         if (intersection(pointCenter, pointMoveToRightTop, pointBottomLeft, pointBottomRight)) {
+    //           this.dy = -this.dy;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //       }
+    //       else if (this.dx < 0 && this.dy > 0) { //Проверка верхней и правой граней
+    //         let pointTopLeft = new Point(brick.x, brick.y);
+    //         let pointTopRight = new Point(brick.x + brick.width, brick.y);
+    //         let pointRightTop = new Point(brick.x + brick.width, brick.y);
+    //         let pointRightBottom = new Point(brick.x + brick.width, brick.y + brick.height);
+    //         if (intersection(pointCenter, pointMoveToLeftBottom, pointRightTop, pointRightBottom)) {
+    //           this.dx = -this.dx;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //         if (intersection(pointCenter, pointMoveToLeftBottom, pointTopRight, pointTopLeft)) {
+    //           this.dy = -this.dy;
+    //           brick.checkDestroy();
+    //           return "brick";
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     let pointCenter = new Point(this.x, this.y);
     let pointMoveLeftBottom = new Point(this.x + this.radius + this.dx, this.y + this.radius + this.dy);
