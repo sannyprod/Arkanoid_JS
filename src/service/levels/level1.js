@@ -1,7 +1,7 @@
 import { Level } from "../level.js";
 
 //3x6
-let level1 = new Level(1, 1, [
+let level1 = new Level(3, 6, [
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},//левый верхний угол
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1}],//левый нижний угол
