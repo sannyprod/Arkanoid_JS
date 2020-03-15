@@ -1,0 +1,44 @@
+<!-- <button onclick='this.parentElement.dispatchEvent(new Event("close"))'>X</button> -->
+<style>
+  .main_settings_block {
+    width: 100%;
+  }
+
+  .main_settings_block span {
+    width: 210px;
+    padding-right: 10px;
+  }
+
+  .volume {
+    display: flex;
+    align-items: center;
+    padding: 7px 20px;
+    /* font-size: 1.1em; */
+  }
+</style>
+
+<div class="main_settings_block">
+
+	<div class="volume">
+    <span>Music volume: </span>
+    <input  id="musicVolume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="{mVolume}"
+            oninput="document.dispatchEvent(new CustomEvent('changeMusicVolume', {'detail': {value: this.value}}))">
+  </div>
+
+  <div class="volume">
+    <span>Sound volume: </span>
+    <input  id="soundVolume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="{sVolume}"
+            oninput="document.dispatchEvent(new CustomEvent('changeSoundVolume', {'detail': {value: this.value}}))">
+  </div>
+
+</div>

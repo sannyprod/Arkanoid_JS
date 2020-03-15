@@ -1,0 +1,219 @@
+.main_block{
+  margin: auto;
+  width: 700px;
+  height: 610px;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-flow: column-reverse;
+  align-items: center;
+  border-radius: 3px;
+}
+
+.parameters_block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  color: white;
+}
+
+canvas {
+  background: #111;
+  margin: auto auto;
+  border-radius: 3px;
+  box-shadow: inset rgba(0,0,0,.4) 0 -2px 8px, inset rgba(252,255,255,.55) 0 2px 8px, inset rgba(0,0,0,.6) 0 2px 8px -1px;
+}
+
+canvas.isStoped {
+  filter: grayscale(0.6);
+}
+
+.buttons_block {
+  margin: 0 auto 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: row;
+}
+
+.menu_button {
+  margin-right: .1em;
+  margin-left: .1em;
+  display: inline-block;
+  width: 150px;
+  height: 50px;
+  line-height: 0;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border-radius: 100px;
+  user-select: none;
+  color: #fff;
+  background: #000;
+  border: solid 1px #fff;
+}
+
+.menu_button:hover {
+  background: #111;
+  cursor: pointer;
+}
+
+.menu_button.information_button {
+  width: 50px;
+  transition: all 0.15s ease-in-out;
+}
+
+.menu_button.information_button:hover {
+  text-shadow: 0 1px rgba(255,255,255,.2), 0 -1px rgba(0,0,0,.3);
+  transform: rotate(360deg);
+}
+
+.menu_button.settings_button {
+  width: 50px;
+}
+
+.menu_button.settings_button.disable {
+  transition: all 0.2s ease-in-out;
+  transform: rotate(-180deg);
+}
+
+.menu_button.settings_button.enable {
+  transition: all 0.2s ease-in-out;
+  transform: rotate(180deg);
+  background: #111;
+}
+
+.menu_button.off {
+  padding-bottom: 1px;
+  color: rgb(50, 50, 50);
+}
+
+.menu_button.isStarted {
+  background: rgb(85, 0, 0);
+  -webkit-animation: blink 2s linear infinite;
+     -moz-animation: blink 2s linear infinite;
+       -o-animation: blink 2s linear infinite;
+          animation: blink 2s linear infinite;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  text-align: center;
+  border-radius: 5px;
+  width: 300px;
+  height: 100px;
+  z-index: 99999;
+  align-items: center;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  line-break: auto;
+  hyphens: manual;
+  cursor: default;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  opacity: 0.75;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  font-size: 1.1em;
+}
+
+.modal .default {
+  -webkit-animation: scale 2s linear infinite;
+     -moz-animation: scale 2s linear infinite;
+       -o-animation: scale 2s linear infinite;
+          animation: scale 2s linear infinite;
+}
+
+/* region keyframe Scale for defaut window (on game event)*/
+@keyframes scale {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes scale {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@-moz-keyframes scale {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@-o-keyframes scale {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+/* endregion */
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 4px;  
+  background: #111;
+  outline: none;
+  opacity: 0.65;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+
+  border: 1px solid #fff;
+  background: #000;
+}
+
+input[type=range]:hover {
+  opacity: 1;
+  background: #111;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%; 
+  background: #fff;
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
