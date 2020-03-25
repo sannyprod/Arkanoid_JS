@@ -2,7 +2,6 @@
 //Например, от центра круга до точки в которую попадет на следующем шаге и одной из граней платформы
 //Рэйкаст?
 export function intersection(p1, p2, p3, p4) {
-
   if (p2.x < p1.x) {
     let tmp = p1;
     p1 = p2;
@@ -71,4 +70,32 @@ export function intersection(p1, p2, p3, p4) {
   else {
       return true;
   }
+}
+
+export function collisionRectBall(rect, ball, withSpeed = true) {
+  let xCol = false;
+  let yCol = false;
+  if (withSpeed) {
+    if (ball.x + ball.radius + ball.dx > rect.x && ball.x - ball.radius + ball.dx < rect.x + rect.width) {
+      xCol = true;
+    }
+
+    if (ball.y + ball.radius + ball.dy > rect.y && ball.y - ball.radius + ball.dy < rect.y + rect.height) {
+      yCol = true;
+    }
+  } else {
+    if (ball.x + ball.radius > rect.x && ball.x - ball.radius < rect.x + rect.width) {
+      xCol = true;
+    }
+
+    if (ball.y + ball.radius > rect.y && ball.y - ball.radius < rect.y + rect.height) {
+      yCol = true;
+    }
+  }
+
+  if (xCol && yCol) {
+    return true;
+  }
+
+  return false;
 }

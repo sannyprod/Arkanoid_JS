@@ -3,9 +3,9 @@ import { Brick } from "./brick.js";
 //Общий класс для массива блоков
 //levelDeclaration - массив массивов с описанием параметров каждого блока
 export class Bricks {
-  constructor(canvas, levelDeclaration = null, rowCount = 4, columnCount = 6, padding = 10, offsetTop = 20, offsetLeft = 20) {
-    this.rowCount = levelDeclaration?.rowCount|| rowCount;
-    this.columnCount = levelDeclaration?.columnCount || columnCount;
+  constructor(canvas, levelDeclaration = null, rowCount = 4, columnCount = 6, padding = 15, offsetTop = 20, offsetLeft = 20) {
+    this.rowCount = levelDeclaration===null ? rowCount : levelDeclaration.rowCount;
+    this.columnCount = levelDeclaration===null ? columnCount : levelDeclaration.columnCount;
     this.offsetTop = offsetTop;
     this.offsetLeft = offsetLeft;
     this.padding = padding;
@@ -54,11 +54,11 @@ export class Bricks {
   }
 
   //Отрисовка блоков
-  draw(ctx) {
+  draw(ctx, currentLevel) {
     for (let c = 0; c < this.columnCount; c++) {
       for (let r = 0; r < this.rowCount; r++) {
         if (this.bricks[c][r].status == 1) {
-          this.bricks[c][r].draw(ctx);
+          this.bricks[c][r].draw(ctx, currentLevel);
         }
       }
     }

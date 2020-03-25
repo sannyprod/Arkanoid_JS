@@ -1,6 +1,6 @@
 import { Level } from "../level.js";
 
-
+//5*6
 let level2 = new Level(5, 6, [
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},//левый верхний угол
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
@@ -16,13 +16,13 @@ let level2 = new Level(5, 6, [
 
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
-    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
+    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 3},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2}],
 
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
-    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
+    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 3},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2}],
 

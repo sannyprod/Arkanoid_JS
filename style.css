@@ -20,14 +20,14 @@
 }
 
 canvas {
-  background: #111;
+  background: #000;
   margin: auto auto;
   border-radius: 3px;
   box-shadow: inset rgba(0,0,0,.4) 0 -2px 8px, inset rgba(252,255,255,.55) 0 2px 8px, inset rgba(0,0,0,.6) 0 2px 8px -1px;
 }
 
 canvas.isStoped {
-  filter: grayscale(0.6);
+  /* filter: grayscale(0.5); */
 }
 
 .buttons_block {

@@ -1,11 +1,11 @@
 import { Figure } from "./figure.js";
 import { Point } from "../service/point.js";
-import { intersection } from "../service/collision.js";
+import { intersection, collisionRectBall } from "../service/collision.js";
 
 //ШАР!!!
 export class Ball extends Figure {
   constructor(canvas, color = null, radius = 10) {
-    super(0, 0, color);
+    super(0, 0, "#666");
     this.radius = radius;
     this.reset(canvas); //Установка стартовых значений
   }
@@ -14,30 +14,32 @@ export class Ball extends Figure {
   //Процедура отрисовки шара (должна вызываться каждый кадр)
   draw(ctx) {
     ctx.beginPath();
-    // ctx.shadowColor = "#999";
-    // ctx.shadowBlur = 10;
-    // ctx.shadowOffsetX = 0;
-    // ctx.shadowOffsetY = 0;
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fillStyle = this.color;
     ctx.fill();
     ctx.closePath();
 
-    // ctx.shadowBlur = 0;
-    // ctx.shadowOffsetX = 0;
-    // ctx.shadowOffsetY = 0;
+    this._drawBorder(ctx);
+  }
+
+  _drawBorder(ctx) {
+    ctx.beginPath();
+    ctx.strokeStyle = "#ccc";
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.stroke();
   }
 
   //Установка стартовых значений
   reset(canvas) {
     this.x = canvas.width / 2;
-    this.y = canvas.height / 1.5;
+    this.y = canvas.height / 1.2;
     if (Math.round(Math.random() * 100) % 2) {
       this.dx = -6;
     }
     else {
       this.dx = 6;
     }
+    this.dx = 6;
     this.dy = -6;
   }
 
@@ -47,8 +49,8 @@ export class Ball extends Figure {
   //Процедура для перемещения шара (должна вызываться каждый кадр)
   move(canvas, paddle, bricks) {
     this._checkCollisions(canvas, paddle, bricks); //Проверяем столкновения
-    this.x += this.dx; //Перемещаем шар по горизонтали
-    this.y += this.dy; //Перемещаем шар по вертикали
+    this.x += this.dx / 1.1; //Перемещаем шар по горизонтали
+    this.y += this.dy / 1.1; //Перемещаем шар по вертикали
   }
 
   //Проверяем столкновения
@@ -99,25 +101,11 @@ export class Ball extends Figure {
     else if (this.y + this.radius > canvas.height) {
       this.dy = - this.dy;
       return "lifeLose"
-      // this.reset(game.canvas);
-      // game.sounds.lifeLose.play();
-      // game.lives--;
     }
   }
 
   //Проверка столкновение с платформой
   _checkPaddleCollisions(paddle) {
-
-    // let point1 = new Point(this.x, this.y);
-    // let point2 = new Point(this.x + this.radius, this.y + this.radius + this.dy);
-
-    // let point3 = new Point(paddle.x, paddle.y);
-    // let point4 = new Point(paddle.x + paddle.width, paddle.y);
-
-    // console.log(intersection(point1, point2, point3, point4));
-
-  
-    //top edge
     if (this.y + this.radius + this.dy > paddle.y && this.x + this.radius > paddle.x && this.x - this.radius < paddle.x + paddle.width) {
       this.y = paddle.y - this.dy;
 
@@ -145,6 +133,11 @@ export class Ball extends Figure {
       for (let r = 0; r < bricks.rowCount; r++) {
         
         let brick = bricks.bricks[c][r];
+
+        if (!collisionRectBall(brick, this)) {
+          continue;
+        }
+
         if (brick.status == 1) {
           if (this.dx > 0 && this.dy > 0) { //Проверка верхней и левой граней
             let pointLeftTop = new Point(brick.x, brick.y);
@@ -152,11 +145,49 @@ export class Ball extends Figure {
             let pointTopLeft = new Point(brick.x, brick.y);
             let pointTopRight = new Point(brick.x + brick.width, brick.y);
             if (intersection(pointCenter, pointMoveToRightBottom, pointLeftBottom, pointLeftTop)) {
+              this.x += this.dx;
               this.dx = -this.dx;
               brick.checkDestroy();
               return "brick";
             }
             if (intersection(pointCenter, pointMoveToRightBottom, pointTopLeft, pointTopRight)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            let newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            let newPoint = {x:pointMoveToRightBottom.x + this.radius, y:pointMoveToRightBottom.y + this.radius};
+            if (intersection(newCenter, newPoint, pointLeftBottom, pointLeftTop)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToRightBottom.x - this.radius, y:pointMoveToRightBottom.y - this.radius};
+            if (intersection(newCenter, newPoint, pointTopLeft, pointTopRight)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToRightBottom.x - this.radius, y:pointMoveToRightBottom.y - this.radius};
+            if (intersection(newCenter, newPoint, pointLeftBottom, pointLeftTop)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            newPoint = {x:pointMoveToRightBottom.x + this.radius, y:pointMoveToRightBottom.y + this.radius};
+            if (intersection(newCenter, newPoint, pointTopLeft, pointTopRight)) {
+              this.y += this.dy;
               this.dy = -this.dy;
               brick.checkDestroy();
               return "brick";
@@ -168,11 +199,49 @@ export class Ball extends Figure {
             let pointRightTop = new Point(brick.x + brick.width, brick.y);
             let pointRightBottom = new Point(brick.x + brick.width, brick.y + brick.height);
             if (intersection(pointCenter, pointMoveToLeftTop, pointBottomRight, pointBottomLeft)) {
+              this.y += this.dy;
               this.dy = -this.dy;
               brick.checkDestroy();
               return "brick";
             }
             if (intersection(pointCenter, pointMoveToLeftTop, pointRightBottom, pointRightTop)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            let newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            let newPoint = {x:pointMoveToLeftTop.x + this.radius, y:pointMoveToLeftTop.y + this.radius};
+            if (intersection(newCenter, newPoint, pointBottomRight, pointBottomLeft)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToLeftTop.x - this.radius, y:pointMoveToLeftTop.y - this.radius};
+            if (intersection(newCenter, newPoint, pointRightBottom, pointRightTop)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToLeftTop.x - this.radius, y:pointMoveToLeftTop.y - this.radius};
+            if (intersection(newCenter, newPoint, pointBottomRight, pointBottomLeft)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            newPoint = {x:pointMoveToLeftTop.x + this.radius, y:pointMoveToLeftTop.y + this.radius};
+            if (intersection(newCenter, newPoint, pointRightBottom, pointRightTop)) {
+              this.x += this.dx;
               this.dx = -this.dx;
               brick.checkDestroy();
               return "brick";
@@ -184,11 +253,49 @@ export class Ball extends Figure {
             let pointLeftTop = new Point(brick.x, brick.y);
             let pointLeftBottom = new Point(brick.x, brick.y + brick.height);
             if (intersection(pointCenter, pointMoveToRightTop, pointLeftBottom, pointLeftTop)) {
+              this.x += this.dx;
               this.dx = -this.dx;
               brick.checkDestroy();
               return "brick";
             }
             if (intersection(pointCenter, pointMoveToRightTop, pointBottomLeft, pointBottomRight)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            let newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            let newPoint = {x:pointMoveToRightTop.x + this.radius, y:pointMoveToRightTop.y + this.radius};
+            if (intersection(newCenter, newPoint, pointLeftBottom, pointLeftTop)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToRightTop.x - this.radius, y:pointMoveToRightTop.y - this.radius};
+            if (intersection(newCenter, newPoint, pointBottomLeft, pointBottomRight)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToRightTop.x - this.radius, y:pointMoveToRightTop.y - this.radius};
+            if (intersection(pointCenter, pointMoveToRightTop, pointLeftBottom, pointLeftTop)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            newPoint = {x:pointMoveToRightTop.x + this.radius, y:pointMoveToRightTop.y + this.radius};
+            if (intersection(newCenter, newPoint, pointBottomLeft, pointBottomRight)) {
+              this.y += this.dy;
               this.dy = -this.dy;
               brick.checkDestroy();
               return "brick";
@@ -200,11 +307,49 @@ export class Ball extends Figure {
             let pointRightTop = new Point(brick.x + brick.width, brick.y);
             let pointRightBottom = new Point(brick.x + brick.width, brick.y + brick.height);
             if (intersection(pointCenter, pointMoveToLeftBottom, pointRightTop, pointRightBottom)) {
+              this.x += this.dx;
               this.dx = -this.dx;
               brick.checkDestroy();
               return "brick";
             }
             if (intersection(pointCenter, pointMoveToLeftBottom, pointTopRight, pointTopLeft)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            let newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            let newPoint = {x:pointMoveToLeftBottom.x + this.radius, y:pointMoveToLeftBottom.y + this.radius};
+            if (intersection(newCenter, newPoint, pointRightTop, pointRightBottom)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToLeftBottom.x - this.radius, y:pointMoveToLeftBottom.y - this.radius};
+            if (intersection(newCenter, newPoint, pointTopRight, pointTopLeft)) {
+              this.y += this.dy;
+              this.dy = -this.dy;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x - this.radius, y:pointCenter.y - this.radius};
+            newPoint = {x:pointMoveToLeftBottom.x - this.radius, y:pointMoveToLeftBottom.y - this.radius};
+            if (intersection(newCenter, newPoint, pointRightTop, pointRightBottom)) {
+              this.x += this.dx;
+              this.dx = -this.dx;
+              brick.checkDestroy();
+              return "brick";
+            }
+
+            newCenter = {x:pointCenter.x + this.radius, y:pointCenter.y + this.radius};
+            newPoint = {x:pointMoveToLeftBottom.x + this.radius, y:pointMoveToLeftBottom.y + this.radius};
+            if (intersection(newCenter, newPoint, pointTopRight, pointTopLeft)) {
+              this.y += this.dy;
               this.dy = -this.dy;
               brick.checkDestroy();
               return "brick";

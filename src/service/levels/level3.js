@@ -10,7 +10,7 @@ let level3 = new Level(6, 6, [
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1}],//левый нижний угол
 
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
-    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2},
+    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 3},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
@@ -19,19 +19,19 @@ let level3 = new Level(6, 6, [
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2},
-    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2},
+    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 3},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2}],
 
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2},
-    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2},
+    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 3},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2}],
 
   [ {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
-    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 2},
+    {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 3},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},
     {x: null, y: null, width: null, height: null, status: 1, bumpsToDestroy: 1},

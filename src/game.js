@@ -138,7 +138,7 @@ export class Game {
 
   _start() {
     this._addEventsListeners();
-    this._setInterval(16);
+    this._setInterval();
   }
 
   _stop() {
@@ -242,7 +242,7 @@ export class Game {
 
     this.ball.draw(this.ctx);
     this.paddle.draw(this.ctx);
-    this.bricks.draw(this.ctx);
+    this.bricks.draw(this.ctx, this.currentLevel);
 
     this._drawLives();
     this._drawScore();

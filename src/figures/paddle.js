@@ -3,7 +3,7 @@ import { Figure } from "./figure.js";
 //Платформа, которой мы управляем и отбиваем шарик
 export class Paddle extends Figure {
   constructor(canvas, color = null, width = 100, height = 10, speed = 10) {
-    super(0, 0, color);
+    super(0, 0, "#222");
     this.width = width;
     this.height = height;
     this.speed = speed;
@@ -18,12 +18,21 @@ export class Paddle extends Figure {
     ctx.fillStyle = this.color;
     ctx.fill();
     ctx.closePath();
+
+    this._drawBorder(ctx);
+  }
+
+  _drawBorder(ctx) {
+    ctx.beginPath();
+    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.strokeStyle = "#ccc";
+    ctx.stroke();
   }
 
   //Установка стартовых значений
   reset(canvas) {
     this.x = canvas.width / 2 - this.width / 2;
-    this.y = canvas.height - this.height;
+    this.y = canvas.height - this.height - 7;
   }
 
   //canvas - html элемент canvas, необходим для рассчета столкновений с границей игровой зоны
